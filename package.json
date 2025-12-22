@@ -1,0 +1,28 @@
+{
+  "name": "react-solutions-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An elite experimental station of pioneering React patterns - A curated collection of independent React projects and solutions.",
+  "keywords": [
+    "react",
+    "laboratory",
+    "showcase",
+    "experiments",
+    "examples",
+    "patterns"
+  ],
+  "homepage": "https://github.com/AbayReushenov/abay-react-projects",
+  "license": "MIT",
+  "author": "Abay Reushenov",
+  "scripts": {
+    "postinstall": "echo '🔬 React Solutions Lab installed. Explore projects in /projects/'",
+    "list": "ls -la projects/",
+    "clean": "find ./projects -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
