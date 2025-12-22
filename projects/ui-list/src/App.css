@@ -1,0 +1,10 @@
+.App ul {
+  list-style:none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  min-height: 100vh;
+  text-align: left;
+  color: rgb(6, 8, 62)
+}
