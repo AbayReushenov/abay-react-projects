@@ -7,10 +7,12 @@ interface AppProps {
   // Можно добавить пропсы при необходимости
 }
 
+type DirectionType = "NOT" | "ASC" | "DESK";
+
 const App: FC<AppProps> = () => {
   const [items, setItems] = useState<DataItem[] | []>([])
   const [filteredItems, setFilteredItems] = useState<DataItem[] | []>(items)
-  const [sortedItems, setSortedItems] = useState<DataItem[] | []>(filteredItems);
+  const [direction, setDirection] = useState<DirectionType>("NOT");
   const [search, setSearch] = useState<string>('');
 
   useEffect(() => {
@@ -28,18 +30,23 @@ const App: FC<AppProps> = () => {
   }, [items])
 
   useEffect(() => {
-      const filteredItems = items.filter((item) => item.title.toLowerCase().includes(search.toLowerCase()))
-      setFilteredItems(filteredItems)
+      const filtered = items.filter((item) => item.title.toLowerCase().includes(search.toLowerCase()))
+      const sorted = sortWithLocale(filtered)
+      setFilteredItems(sorted)
 
-  }, [items, search])
+  }, [items, search, direction])
 
   function handleSearch(event: ChangeEvent<HTMLInputElement>) {
     const { value } = event.target
     setSearch(value)
   }
 
-  function sortWithLocale(direction: 'asc' | 'desc') {
-    const sorted = [...filteredItems].sort((a, b) => {
+  function sortWithLocale(filtered: DataItem[]) {
+    if (direction === "NOT") {
+      return filtered
+    }
+
+    const sorted = [...filtered].sort((a, b) => {
       // Используем localeCompare с указанием языка
       const comparison = a.title.localeCompare(
         b.title,
@@ -50,18 +57,18 @@ const App: FC<AppProps> = () => {
         }
       );
 
-      return direction === 'asc' ? comparison : -comparison;
+      return direction === "ASC" ? comparison : -comparison;
     });
 
-    setSortedItems(sorted);
+    return sorted;
   };
 
   return (
     <div className="App">
       <h1>Список </h1>
       <h3>Сортировка</h3>
-      <button onClick={() => sortWithLocale('asc')}>↑ A-Я/A-Z</button>
-      <button onClick={() => sortWithLocale('desc')}>↓ Я-А/Z-A</button>
+      <button onClick={() => setDirection("ASC")} className={direction === "ASC" ? "active" : ''}> ↑ A-Я/A-Z</button>
+      <button onClick={() => setDirection("DESK")} className={direction === "DESK" ? "active" : ''}> ↓ Я-А/Z-A</button>
       <input
           type="text"
           placeholder="Поиск..."
@@ -70,7 +77,7 @@ const App: FC<AppProps> = () => {
       />
       <ul>
         {
-          sortedItems.map((item) => {
+          filteredItems.map((item) => {
             return (<li key={item.id}>{item.title}</li>)
           })
         }
