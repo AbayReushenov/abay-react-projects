@@ -2,8 +2,6 @@ import { create } from 'zustand';
 import { supabase } from '../config/supabase';
 import type { User, AuthState } from '../types';
 
-// test 2 55 w
-
 interface AuthStoreState extends AuthState {
   signInWithMagicLink: (email: string) => Promise<void>;
   signOut: () => Promise<void>;
