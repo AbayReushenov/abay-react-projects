@@ -105,3 +105,18 @@ VITE_SUPABASE_ANON_KEY=your_anon_key_here
 Settings → API
 
 Скопируйте Project URL и anon (public) key
+
+
+## 4️⃣ State Management с Zustand
+```text
+src/types/index.ts
+
+src/config/supabase.ts
+
+src/stores/authStore.ts
+
+src/stores/cardsStore.ts
+
+
+
+```
